@@ -12,6 +12,16 @@ WhereBuilder test = new WhereBuilder()
                 .nest("path", new WhereBuilder().eq("field", "val")))
         .not(new WhereBuilder().eq("originType", "twitter"));
 ```
+外层三种逻辑关系：
+- and 子句必须全部命中
+- or 子句至少有一个命中
+- not 子句必须不能命中
+
+子句支持查询条件如下：
+- range：范围查询
+- eq：等于
+- like：模糊查询，对应 ES 的 match_phrase
+- nest：查询嵌套对象的内容
 
 ## GroupBuilder
 
