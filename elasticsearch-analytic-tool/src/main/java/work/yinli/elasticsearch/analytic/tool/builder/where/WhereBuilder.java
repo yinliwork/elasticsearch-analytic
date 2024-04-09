@@ -69,6 +69,10 @@ public class WhereBuilder {
         this.whereClauses.add(new WhereClause(field, val, WhereOperation.EQ));
         return this;
     }
+    public WhereBuilder in(String field, Object... val) {
+        this.whereClauses.add(new WhereClause(field, val, WhereOperation.IN));
+        return this;
+    }
 
     public WhereBuilder ne(String field, Object val) {
         this.whereClauses.add(new WhereClause(field, val, WhereOperation.NE));
