@@ -1,7 +1,6 @@
 package work.yinli.elasticsearch.analytic.tool.builder;
 
 
-
 import work.yinli.elasticsearch.analytic.tool.builder.group.GroupBuilder;
 import work.yinli.elasticsearch.analytic.tool.builder.order.Order;
 import work.yinli.elasticsearch.analytic.tool.builder.where.WhereBuilder;
@@ -22,6 +21,8 @@ public interface QueryBuilder<T> {
     QueryBuilder<T> groupBy(GroupBuilder groupBuilder);
 
     QueryBuilder<T> orderBy(Order order);
+
+    QueryBuilder<T> orderBy(List<Order> orders);
 
     QueryBuilder<T> orderBy(String field);
 

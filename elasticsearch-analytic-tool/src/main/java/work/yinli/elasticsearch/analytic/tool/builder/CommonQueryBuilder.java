@@ -17,7 +17,7 @@ public class CommonQueryBuilder<T> implements QueryBuilder<T> {
     List<String> tables = new ArrayList<>();
     List<String> selectFields = new ArrayList<>();
 
-    List<Order> orderList = new ArrayList<>();
+    List<Order> skOrderList = new ArrayList<>();
 
     /**
      * 一个 where 对应一组 ES filter
@@ -39,7 +39,7 @@ public class CommonQueryBuilder<T> implements QueryBuilder<T> {
     }
 
     public List<Order> getOrderList() {
-        return orderList;
+        return skOrderList;
     }
 
     public List<WhereBuilder> getWhereBuilders() {
@@ -50,12 +50,24 @@ public class CommonQueryBuilder<T> implements QueryBuilder<T> {
         return groupBuilder;
     }
 
+    public void setGroupBuilder(GroupBuilder groupBuilder) {
+        this.groupBuilder = groupBuilder;
+    }
+
     public int getOffset() {
         return offset;
     }
 
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
     public int getSize() {
         return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     @Override
@@ -64,13 +76,11 @@ public class CommonQueryBuilder<T> implements QueryBuilder<T> {
         return this;
     }
 
-
     @Override
     public QueryBuilder<T> from(List<String> tables) {
         this.tables.addAll(tables);
         return this;
     }
-
 
     @Override
     public QueryBuilder<T> where(WhereBuilder whereBuilder) {
@@ -82,7 +92,6 @@ public class CommonQueryBuilder<T> implements QueryBuilder<T> {
         this.whereBuilders.add(new WhereBuilder());
         return this;
     }
-
 
     @Override
     public QueryBuilder<T> groupBy(String... groupFields) {
@@ -111,14 +120,20 @@ public class CommonQueryBuilder<T> implements QueryBuilder<T> {
     }
 
     @Override
-    public QueryBuilder<T> orderBy(Order order) {
-        orderList.add(order);
+    public QueryBuilder<T> orderBy(Order skOrder) {
+        skOrderList.add(skOrder);
+        return this;
+    }
+
+    @Override
+    public QueryBuilder<T> orderBy(List<Order> skOrders) {
+        skOrderList.addAll(skOrders);
         return this;
     }
 
     @Override
     public QueryBuilder<T> orderBy(String field) {
-        orderList.add(new Order(field, "desc"));
+        skOrderList.add(new Order(field, "desc"));
         return this;
     }
 
@@ -128,17 +143,5 @@ public class CommonQueryBuilder<T> implements QueryBuilder<T> {
         this.size = size;
 
         return this;
-    }
-
-    public void setGroupBuilder(GroupBuilder groupBuilder) {
-        this.groupBuilder = groupBuilder;
-    }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
     }
 }

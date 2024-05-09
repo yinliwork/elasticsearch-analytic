@@ -26,10 +26,10 @@ public final class GroupClause {
         this.size = size;
     }
 
-    public GroupClause(String field, String operation, Order order) {
+    public GroupClause(String field, String operation, Order skOrder) {
         this.field = field;
         this.operation = operation;
-        this.order = order;
+        this.order = skOrder;
     }
 
     public String getField() {

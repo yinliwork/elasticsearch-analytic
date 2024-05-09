@@ -133,6 +133,18 @@ public class GroupBuilder {
         return this;
     }
 
+    public GroupBuilder max(String field) {
+        groupClauses.add(new GroupClause(field, GroupOperation.MAX));
+        this.preOpt = GroupOperation.MAX;
+        return this;
+    }
+
+    public GroupBuilder min(String field) {
+        groupClauses.add(new GroupClause(field, GroupOperation.MIN));
+        this.preOpt = GroupOperation.MIN;
+        return this;
+    }
+
     public GroupBuilder distinct(String field) {
         groupClauses.add(new GroupClause(field, GroupOperation.DISTINCT));
         this.preOpt = GroupOperation.DISTINCT;

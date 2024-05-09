@@ -1,5 +1,6 @@
 package work.yinli.elasticsearch.analytic.tool.builder.where;
 
+
 import work.yinli.elasticsearch.analytic.tool.builder.Range;
 
 import java.util.*;
@@ -17,6 +18,9 @@ public class WhereBuilder {
 
     List<Map<String, List<Range>>> rangeList = new ArrayList<>();
     List<Map<String, WhereBuilder>> nestList = new ArrayList<>();
+
+    public WhereBuilder() {
+    }
 
     public List<WhereClause> getWhereClauses() {
         return whereClauses;
@@ -38,12 +42,19 @@ public class WhereBuilder {
         return nestList;
     }
 
-    public WhereBuilder() {
-    }
-
-
     public WhereBuilder or(WhereBuilder whereBuilder) {
         orList.add(whereBuilder);
+        return this;
+    }
+
+    /**
+     * 同时添加多个or条件，并列查询
+     *
+     * @param whereBuilders
+     * @return
+     */
+    public WhereBuilder or(List<WhereBuilder> whereBuilders) {
+        orList.addAll(whereBuilders);
         return this;
     }
 
@@ -52,8 +63,30 @@ public class WhereBuilder {
         return this;
     }
 
+    /**
+     * 同时添加多个and条件，并列查询
+     *
+     * @param whereBuilders
+     * @return
+     */
+    public WhereBuilder and(List<WhereBuilder> whereBuilders) {
+        andList.addAll(whereBuilders);
+        return this;
+    }
+
     public WhereBuilder not(WhereBuilder whereBuilder) {
         notList.add(whereBuilder);
+        return this;
+    }
+
+    /**
+     * 同时添加多个not条件，并列查询
+     *
+     * @param whereBuilders
+     * @return
+     */
+    public WhereBuilder not(List<WhereBuilder> whereBuilders) {
+        notList.addAll(whereBuilders);
         return this;
     }
 
@@ -67,10 +100,6 @@ public class WhereBuilder {
 
     public WhereBuilder eq(String field, Object val) {
         this.whereClauses.add(new WhereClause(field, val, WhereOperation.EQ));
-        return this;
-    }
-    public WhereBuilder in(String field, Object... val) {
-        this.whereClauses.add(new WhereClause(field, val, WhereOperation.IN));
         return this;
     }
 
@@ -101,6 +130,17 @@ public class WhereBuilder {
 
     public WhereBuilder like(String field, Object val) {
         this.whereClauses.add(new WhereClause(field, val, WhereOperation.LIKE));
+        return this;
+    }
+
+    public WhereBuilder in(String field, Object... val) {
+        if (val == null || val.length == 0) {
+            throw new IllegalArgumentException("in value can not be null or empty");
+        }
+        if (val[0] instanceof List) {
+            throw new IllegalArgumentException("in value can not be List");
+        }
+        this.whereClauses.add(new WhereClause(field, val, WhereOperation.IN));
         return this;
     }
 

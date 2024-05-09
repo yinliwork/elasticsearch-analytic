@@ -15,6 +15,8 @@ public class GroupOperation {
     public static final String AVG = "avg";
     public static final String DISTINCT = "distinct";
     public static final String FILTER = "filter";
+    public static final String MAX = "max";
+    public static final String MIN = "min";
 
     // 未支持的操作
 

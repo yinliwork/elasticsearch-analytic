@@ -9,4 +9,8 @@ public final class QueryBuilders<T> {
     public CommonQueryBuilder<T> common() {
         return new CommonQueryBuilder<T>();
     }
+
+    public ExportQueryBuilder<T> export() {
+        return new ExportQueryBuilder<T>();
+    }
 }
