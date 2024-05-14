@@ -1,8 +1,8 @@
 package work.yinli.elasticsearch.analytic.tool.builder.group;
 
 
-import work.yinli.elasticsearch.analytic.tool.builder.Range;
-import work.yinli.elasticsearch.analytic.tool.builder.order.Order;
+import work.yinli.elasticsearch.analytic.tool.builder.YinliRange;
+import work.yinli.elasticsearch.analytic.tool.builder.order.YinliOrder;
 import work.yinli.elasticsearch.analytic.tool.builder.where.WhereBuilder;
 
 import java.util.*;
@@ -18,7 +18,7 @@ public class GroupBuilder {
     // 嵌套分组语句, key为外层分组字段 对应 es nest path
     private final List<Map<String, GroupBuilder>> nestAggsBuilders = new ArrayList<>();
     // 范围分组语句
-    private final List<Map<String, List<Range>>> rangeAggsBuilders = new ArrayList<>();
+    private final List<Map<String, List<YinliRange>>> rangeAggsBuilders = new ArrayList<>();
 
     private final Map<String, WhereBuilder> filters = new HashMap<>();
 
@@ -46,7 +46,7 @@ public class GroupBuilder {
         return this;
     }
 
-    public GroupBuilder addField(String field, int size, Order order) {
+    public GroupBuilder addField(String field, int size, YinliOrder order) {
         groupClauses.add(new GroupClause(field, GroupOperation.TERMS, size, order));
         this.preOpt = GroupOperation.TERMS;
         return this;
@@ -116,9 +116,9 @@ public class GroupBuilder {
     }
 
 
-    public GroupBuilder range(String filed, List<Range> ranges) {
-        Map<String, List<Range>> map = new HashMap<>();
-        map.put(filed, ranges);
+    public GroupBuilder range(String filed, List<YinliRange> yinliRanges) {
+        Map<String, List<YinliRange>> map = new HashMap<>();
+        map.put(filed, yinliRanges);
         this.rangeAggsBuilders.add(map);
         this.preOpt = GroupOperation.RANGE;
         return this;
@@ -159,7 +159,7 @@ public class GroupBuilder {
         return nestAggsBuilders;
     }
 
-    public List<Map<String, List<Range>>> getRangeAggsBuilders() {
+    public List<Map<String, List<YinliRange>>> getRangeAggsBuilders() {
         return rangeAggsBuilders;
     }
 

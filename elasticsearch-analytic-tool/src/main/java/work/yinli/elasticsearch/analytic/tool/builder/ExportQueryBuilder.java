@@ -1,7 +1,7 @@
 package work.yinli.elasticsearch.analytic.tool.builder;
 
 import work.yinli.elasticsearch.analytic.tool.builder.group.GroupBuilder;
-import work.yinli.elasticsearch.analytic.tool.builder.order.Order;
+import work.yinli.elasticsearch.analytic.tool.builder.order.YinliOrder;
 import work.yinli.elasticsearch.analytic.tool.builder.where.WhereBuilder;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class ExportQueryBuilder<T> implements QueryBuilder<T> {
     List<String> tables = new ArrayList<>();
     List<String> selectFields = new ArrayList<>();
 
-    List<Order> skOrderList = new ArrayList<>();
+    List<YinliOrder> yinliOrderList = new ArrayList<>();
     /**
      * 一个 where 对应一组 ES filter
      */
@@ -58,12 +58,12 @@ public class ExportQueryBuilder<T> implements QueryBuilder<T> {
     }
 
     @Override
-    public QueryBuilder<T> orderBy(Order skOrder) {
+    public QueryBuilder<T> orderBy(YinliOrder yinliOrder) {
         return null;
     }
 
     @Override
-    public QueryBuilder<T> orderBy(List<Order> skOrders) {
+    public QueryBuilder<T> orderBy(List<YinliOrder> yinliOrders) {
         return null;
     }
 
@@ -87,8 +87,8 @@ public class ExportQueryBuilder<T> implements QueryBuilder<T> {
         return selectFields;
     }
 
-    public List<Order> getOrderList() {
-        return skOrderList;
+    public List<YinliOrder> getOrderList() {
+        return yinliOrderList;
     }
 
     public Integer getOffset() {

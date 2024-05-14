@@ -3,13 +3,13 @@
 目前在公司内部已经正在使用，能够满足大部分的查询需求，但是还有很多功能没有实现，后续会继续完善。
 感兴趣可以邮件交流。
 
-查询分为三个部分 WhereBuilder、GroupBuilder 和 SkQueryBuilder，他们分别代表查询、分组聚合、主查询语句构造。详情如下
+查询分为三个部分 WhereBuilder、GroupBuilder 和 QueryBuilder，他们分别代表查询、分组聚合、主查询语句构造。详情如下
 
 ## WhereBuilder
 ```java
 WhereBuilder test = new WhereBuilder()
         .and(new WhereBuilder()
-                .or(new WhereBuilder().range("IndexTime", new SkRange("2024-03-08 18:01:00", "2024-03-08 18:01:00")))
+                .or(new WhereBuilder().range("IndexTime", new YinliRange("2024-03-08 18:01:00", "2024-03-08 18:01:00")))
                 .or(new WhereBuilder().eq("field", "val").eq("keywordId", "4109"))
                 .or(new WhereBuilder().like("Author", "作者"))
                 .nest("path", new WhereBuilder().eq("field", "val")))
@@ -35,14 +35,14 @@ GroupBuilder groupBuilder = new GroupBuilder()
                         .addField("subSub", 999)
                         .sub(new GroupBuilder().addField("subSubSub", 999)))
                 .nest("path", new GroupBuilder().addField("nest.field").addField("nest.field2").sub(new GroupBuilder().addField("nestSub")))
-                .range("rangeField", Arrays.asList(new SkRange(1, 2), new SkRange(2, 3)));
+                .range("rangeField", Arrays.asList(new YinliRange(1, 2), new YinliRange(2, 3)));
 ```
 
 ## QueryBuilder
 
 ```java
 
-SkQueryBuilder<Object> query = new SkQueryBuilders<>().common().select("ID")
+QueryBuilder<Object> query = new QueryBuilders<>().common().select("ID")
                 .from(Arrays.asList("indexName"))
                 .where(test)
                 .orderBy("IndexTime")

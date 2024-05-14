@@ -1,7 +1,7 @@
 package work.yinli.elasticsearch.analytic.tool.builder.group;
 
 
-import work.yinli.elasticsearch.analytic.tool.builder.order.Order;
+import work.yinli.elasticsearch.analytic.tool.builder.order.YinliOrder;
 
 /**
  * @author ahianzhang
@@ -12,7 +12,7 @@ public final class GroupClause {
     private final String field;
     private String operation = GroupOperation.TERMS;
     private int size = 100;
-    private Order order;
+    private YinliOrder order;
 
 
     public GroupClause(String field, String operation) {
@@ -26,10 +26,10 @@ public final class GroupClause {
         this.size = size;
     }
 
-    public GroupClause(String field, String operation, Order skOrder) {
+    public GroupClause(String field, String operation, YinliOrder yinliOrder) {
         this.field = field;
         this.operation = operation;
-        this.order = skOrder;
+        this.order = yinliOrder;
     }
 
     public String getField() {
@@ -44,11 +44,11 @@ public final class GroupClause {
         return size;
     }
 
-    public Order getOrder() {
+    public YinliOrder getOrder() {
         return order;
     }
 
-    public GroupClause(String field, String operation, int size, Order order) {
+    public GroupClause(String field, String operation, int size, YinliOrder order) {
         this.field = field;
         this.operation = operation;
         this.size = size;

@@ -5,11 +5,11 @@ package work.yinli.elasticsearch.analytic.tool.builder.order;
  * @version 1.0
  * @date 2024/3/11 16:30
  **/
-public class Order {
+public class YinliOrder {
     private final String field;
     private final String order;
 
-    public Order(String field, String order) {
+    public YinliOrder(String field, String order) {
         this.field = field;
         this.order = order;
     }

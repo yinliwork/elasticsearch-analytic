@@ -1,7 +1,7 @@
 package work.yinli.elasticsearch.analytic.tool.builder.where;
 
 
-import work.yinli.elasticsearch.analytic.tool.builder.Range;
+import work.yinli.elasticsearch.analytic.tool.builder.YinliRange;
 
 import java.util.*;
 
@@ -16,7 +16,7 @@ public class WhereBuilder {
     List<WhereBuilder> andList = new ArrayList<>();
     List<WhereBuilder> notList = new ArrayList<>();
 
-    List<Map<String, List<Range>>> rangeList = new ArrayList<>();
+    List<Map<String, List<YinliRange>>> rangeList = new ArrayList<>();
     List<Map<String, WhereBuilder>> nestList = new ArrayList<>();
 
     public WhereBuilder() {
@@ -90,9 +90,9 @@ public class WhereBuilder {
         return this;
     }
 
-    public WhereBuilder range(String field, Range... ranges) {
-        Map<String, List<Range>> map = new HashMap<>();
-        map.put(field, Arrays.asList(ranges));
+    public WhereBuilder range(String field, YinliRange... yinliRanges) {
+        Map<String, List<YinliRange>> map = new HashMap<>();
+        map.put(field, Arrays.asList(yinliRanges));
         this.rangeList.add(map);
         return this;
     }
@@ -156,7 +156,7 @@ public class WhereBuilder {
     }
 
 
-    public List<Map<String, List<Range>>> getRangeList() {
+    public List<Map<String, List<YinliRange>>> getRangeList() {
         return rangeList;
     }
 
