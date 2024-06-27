@@ -13,7 +13,7 @@ WhereBuilder test = new WhereBuilder()
                 .or(new WhereBuilder().eq("field", "val").eq("keywordId", "4109"))
                 .or(new WhereBuilder().like("Author", "作者"))
                 .nest("path", new WhereBuilder().eq("field", "val")))
-        .not(new WhereBuilder().eq("originType", "twitter"));
+        .not(new WhereBuilder().eq("website", "twitter"));
 ```
 外层三种逻辑关系：
 - and 子句必须全部命中
@@ -56,14 +56,14 @@ QueryBuilder<Object> query = new QueryBuilders<>().common().select("ID")
 {
     "data": {
         "aggregations": {
-            "Fragments.Sentiment": [
+            "XXX": [
                 {
                     "docCount": 2,
                     "key": "e"
                 }
             ]
         },
-        "dsl": "{\"from\":0,\"size\":10,\"query\":{\"bool\":{\"filter\":[{\"bool\":{\"must\":[{\"range\":{\"IndexTime\":{\"from\":\"2024-03-05 13:59:58\",\"to\":\"2024-03-08 18:01:00\",\"include_lower\":true,\"include_upper\":true,\"boost\":1.0}}}],\"adjust_pure_negative\":true,\"boost\":1.0}}],\"adjust_pure_negative\":true,\"boost\":1.0}},\"_source\":{\"includes\":[\"ID\"],\"excludes\":[]},\"aggregations\":{\"Fragments\":{\"nested\":{\"path\":\"Fragments\"},\"aggregations\":{\"Fragments.Sentiment\":{\"terms\":{\"field\":\"Fragments.Sentiment\",\"size\":100,\"min_doc_count\":1,\"shard_min_doc_count\":0,\"show_term_doc_count_error\":false,\"order\":[{\"_count\":\"desc\"},{\"_key\":\"asc\"}]}}}}}}",
+        "dsl": "...",
         "offset": 0,
         "resultList": [
             {
