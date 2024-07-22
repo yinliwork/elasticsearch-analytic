@@ -433,7 +433,9 @@ public class DefaultSearch<T> extends AbstractSearch<T> {
                             throw new IllegalArgumentException("IN operation must have a list value");
                         }
                         break;
-
+                    case WhereOperation.REGEX:
+                        filters.add(QueryBuilders.queryStringQuery(val.toString()).field(field));
+                        break;
                     default:
                         break;
                 }

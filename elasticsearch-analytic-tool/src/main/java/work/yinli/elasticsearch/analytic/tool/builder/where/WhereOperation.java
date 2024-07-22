@@ -20,5 +20,6 @@ public class WhereOperation {
 
     public static final String GTE = "gte";
     public static final String LTE = "lte";
+    public static final String REGEX = "regex";
 }
 

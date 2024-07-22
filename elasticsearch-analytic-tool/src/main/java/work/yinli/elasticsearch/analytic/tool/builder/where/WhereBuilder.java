@@ -144,6 +144,17 @@ public class WhereBuilder {
         return this;
     }
 
+    /**
+     * using queryString parsed by elasticsearch
+     * @param field
+     * @param val
+     * @return
+     */
+    public WhereBuilder regex(String field, Object val) {
+        this.whereClauses.add(new WhereClause(field, val, WhereOperation.REGEX));
+        return this;
+    }
+
     public WhereBuilder nest(String outerFiledName, WhereBuilder whereBuilder) {
         Map<String, WhereBuilder> map = new HashMap<>();
         map.put(outerFiledName, whereBuilder);
