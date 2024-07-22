@@ -19,11 +19,14 @@ WhereBuilder test = new WhereBuilder()
 - and 子句必须全部命中
 - or 子句至少有一个命中
 - not 子句必须不能命中
+这三层逻辑关系可以任意组合，支持多层嵌套。<html><font color=red>``or(xx)`` 指的是括号里面的逻辑关系是 or 。</font></html> 所以如果查询条件是 A 或 B 时，写作 ``or(new WhereBuilder().eq("A").eq("B"))``
 
 子句支持查询条件如下：
 - range：范围查询
 - eq：等于
+- in: 多值查询
 - like：模糊查询，对应 ES 的 match_phrase
+- regex: 正则查询
 - nest：查询嵌套对象的内容
 
 ## GroupBuilder
