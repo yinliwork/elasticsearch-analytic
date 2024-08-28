@@ -3,6 +3,8 @@
 目前在公司内部已经正在使用，能够满足大部分的查询需求，不是最终版，后续会继续完善。
 感兴趣可以[邮件交流](mailto:ahianzhang@gmail.com)。
 
+![core.png](.github/assets/img/core.png)
+
 查询分为三个部分 WhereBuilder、GroupBuilder 和 QueryBuilder，他们分别代表查询、分组聚合、主查询语句构造。详情如下
 
 ## WhereBuilder
