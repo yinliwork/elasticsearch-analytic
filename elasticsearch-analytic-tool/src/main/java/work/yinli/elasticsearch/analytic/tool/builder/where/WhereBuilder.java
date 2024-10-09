@@ -15,6 +15,7 @@ public class WhereBuilder {
     List<WhereBuilder> orList = new ArrayList<>();
     List<WhereBuilder> andList = new ArrayList<>();
     List<WhereBuilder> notList = new ArrayList<>();
+    int minMatch = 0;
 
     List<Map<String, List<YinliRange>>> rangeList = new ArrayList<>();
     List<Map<String, WhereBuilder>> nestList = new ArrayList<>();
@@ -42,7 +43,22 @@ public class WhereBuilder {
         return nestList;
     }
 
+    /**
+     * 对 whereBuilder 中的查询语句建立 or 的关系
+     * @param whereBuilder
+     * @return
+     */
     public WhereBuilder or(WhereBuilder whereBuilder) {
+        orList.add(whereBuilder);
+        return this;
+    }
+    /**
+     * 对 whereBuilder 中的查询语句建立 or 的关系
+     * @param whereBuilder
+     * @return
+     */
+    public WhereBuilder or(WhereBuilder whereBuilder, int minMatch) {
+        this.minMatch = minMatch;
         orList.add(whereBuilder);
         return this;
     }
@@ -171,4 +187,7 @@ public class WhereBuilder {
         return rangeList;
     }
 
+    public int getMinMatch() {
+        return minMatch;
+    }
 }

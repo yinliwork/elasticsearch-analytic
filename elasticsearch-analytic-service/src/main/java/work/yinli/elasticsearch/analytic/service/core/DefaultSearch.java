@@ -388,6 +388,7 @@ public class DefaultSearch<T> extends AbstractSearch<T> {
         List<WhereBuilder> orList = whereBuilder.getOrList();
         List<WhereBuilder> andList = whereBuilder.getAndList();
         List<WhereBuilder> notList = whereBuilder.getNotList();
+        int minMatch = whereBuilder.getMinMatch();
         List<Map<String, WhereBuilder>> nestList = whereBuilder.getNestList();
         List<WhereClause> whereClauses = whereBuilder.getWhereClauses();
         List<Map<String, List<YinliRange>>> rangeList = whereBuilder.getRangeList();
@@ -481,6 +482,7 @@ public class DefaultSearch<T> extends AbstractSearch<T> {
             for (WhereBuilder orBuilder : orList) {
                 BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
                 WhereParse(boolQueryBuilder.should(), orBuilder);
+                boolQueryBuilder.minimumShouldMatch(minMatch);
                 filters.add(boolQueryBuilder);
             }
         }

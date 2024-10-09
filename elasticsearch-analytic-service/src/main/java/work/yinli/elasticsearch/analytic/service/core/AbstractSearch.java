@@ -1,8 +1,14 @@
 package work.yinli.elasticsearch.analytic.service.core;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -82,8 +88,14 @@ public abstract class AbstractSearch<T> {
     protected abstract YinliSearchResponse postSearch(Object result);
 
     private Object execute(YinliSearchRequest yinliSearchRequest) throws Exception {
-
-        RestHighLevelClient restHighClient = new RestHighLevelClient(null);
+        HttpHost http = new HttpHost("localhost", 9200, "http");
+        RestClientBuilder restClientBuilder = RestClient.builder(http);
+        restClientBuilder.setHttpClientConfigCallback(httpAsyncClientBuilder -> {
+            BasicCredentialsProvider basicCredentialsProvider = new BasicCredentialsProvider();
+//            basicCredentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("es-cluster-dev", "YJI7nLHhrtmquakO"));
+            return httpAsyncClientBuilder.setDefaultCredentialsProvider(basicCredentialsProvider);
+        });
+        RestHighLevelClient restHighClient = new RestHighLevelClient(restClientBuilder);
         if (restHighClient == null) {
         }
         UpdateByQueryRequest updateRequest = yinliSearchRequest.getUpdateRequest();
