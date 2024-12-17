@@ -1,3 +1,5 @@
+![ElasticSearch](https://img.shields.io/badge/ElasticSearch-7.15.1-blue)
+
 # 前沿
 
 本项目是为了解决使用 ElasticSearch 做**数据分析**的场景下，使用更便捷的方式构造查询语句。
