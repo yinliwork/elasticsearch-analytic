@@ -1,4 +1,4 @@
-![ElasticSearch](https://img.shields.io/badge/ElasticSearch-7.15.1-blue)
+![ElasticSearch](https://img.shields.io/badge/ElasticSearch-7.15.1-blue)  ![jdk](https://img.shields.io/badge/jdk-8-blue)
 
 # 前沿
 
