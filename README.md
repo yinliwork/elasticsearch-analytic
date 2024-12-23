@@ -41,6 +41,7 @@ WhereBuilder test = new WhereBuilder()
 - like：模糊查询，对应 ES 的 match_phrase
 - regex: 正则查询
 - nest：查询嵌套对象的内容
+- word-spacing: 词间距查询
 
 ## GroupBuilder
 
