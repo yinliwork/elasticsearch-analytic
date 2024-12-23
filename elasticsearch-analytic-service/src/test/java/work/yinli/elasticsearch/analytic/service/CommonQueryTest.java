@@ -20,8 +20,8 @@ public class CommonQueryTest {
                         .sub(new GroupBuilder().addField("field2"))
                         .sub(new GroupBuilder().addField("field3"))
                 );
-                
-                
+
+
         DefaultSearch<Object> search = new DefaultSearch<>();
 
         QueryBuilder<Object> main = new QueryBuilders<>()
@@ -32,5 +32,20 @@ public class CommonQueryTest {
         String dsl = result.getData().getDsl();
         System.out.println(dsl);
 
+    }
+
+    @Test
+    void test_word_spacing() {
+        WhereBuilder whereBuilder = new WhereBuilder()
+                .wordSpacing("keys", "比亚迪 汽车", 3, true);
+        DefaultSearch<Object> search = new DefaultSearch<>();
+
+        QueryBuilder<Object> main = new QueryBuilders<>()
+                .common()
+                .from(Arrays.asList("")).where(whereBuilder)
+                .limit(0, 0);
+        QueryResult<YinliSearchResponse> result = search.search(main);
+        String dsl = result.getData().getDsl();
+        System.out.println(dsl);
     }
 }

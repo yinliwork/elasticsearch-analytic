@@ -6,10 +6,7 @@ import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 import org.elasticsearch.script.Script;
@@ -44,10 +41,12 @@ import work.yinli.elasticsearch.analytic.tool.builder.group.GroupBuilder;
 import work.yinli.elasticsearch.analytic.tool.builder.group.GroupClause;
 import work.yinli.elasticsearch.analytic.tool.builder.group.GroupOperation;
 import work.yinli.elasticsearch.analytic.tool.builder.order.YinliOrder;
+import work.yinli.elasticsearch.analytic.tool.builder.where.ConfigKeyword;
 import work.yinli.elasticsearch.analytic.tool.builder.where.WhereBuilder;
 import work.yinli.elasticsearch.analytic.tool.builder.where.WhereClause;
 import work.yinli.elasticsearch.analytic.tool.builder.where.WhereOperation;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -403,6 +402,7 @@ public class DefaultSearch<T> extends AbstractSearch<T> {
             for (WhereClause whereClause : whereClauses) {
                 String field = whereClause.getField();
                 Object val = whereClause.getVal();
+                Map<String, Object> config = whereClause.getConfig();
                 String whereOperation = whereClause.getOperation();
                 switch (whereOperation) {
                     case WhereOperation.EQ:
@@ -437,6 +437,17 @@ public class DefaultSearch<T> extends AbstractSearch<T> {
                     case WhereOperation.REGEX:
                         filters.add(QueryBuilders.queryStringQuery(val.toString()).field(field));
                         break;
+                    case WhereOperation.WORD_SPACING:
+                        // todo 这部分版本变更较大，后续需要优化
+                        try {
+                            int maxGaps = (int) config.get(ConfigKeyword.MAX_GAPS);
+                            boolean ordered = (boolean) config.get(ConfigKeyword.ORDERED);
+                            IntervalQueryBuilder intervalQueryBuilder = new IntervalQueryBuilder(field, new IntervalsSourceProvider.Match(val.toString(), maxGaps,ordered, null,null, null));
+                            filters.add(intervalQueryBuilder);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+
                     default:
                         break;
                 }

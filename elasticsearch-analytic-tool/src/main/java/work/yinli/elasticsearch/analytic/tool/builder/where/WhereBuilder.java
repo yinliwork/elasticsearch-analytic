@@ -149,6 +149,22 @@ public class WhereBuilder {
         return this;
     }
 
+    /**
+     *
+     * @param field 字段名，指定进行词间距查询的字段
+     * @param vals 值，指定要查找的单词或短语, eg: "hello world"
+     * @param maxGaps 最大间隔数，指定两个匹配单词之间的最大词数
+     * @param ordered 是否有序，指定搜索结果是否需要按顺序匹配单词
+     * @return 返回WhereBuilder实例，支持链式调用以构建复杂的查询条件
+     */
+    public WhereBuilder wordSpacing(String field, String vals, int maxGaps, boolean ordered){
+        Map<String, Object> config = new HashMap<>();
+        config.put(ConfigKeyword.MAX_GAPS, maxGaps);
+        config.put(ConfigKeyword.ORDERED, ordered);
+        this.whereClauses.add(new WhereClause(field, vals, config, WhereOperation.WORD_SPACING));
+        return this;
+    }
+
     public WhereBuilder in(String field, Object... val) {
         if (val == null || val.length == 0) {
             throw new IllegalArgumentException("in value can not be null or empty");
