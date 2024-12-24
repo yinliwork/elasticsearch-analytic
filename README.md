@@ -11,6 +11,7 @@
 2. 使用简单，所见即所得。
 3. 查询性能优化，在内部使用布尔检索，支持非常复杂的查询。
 4. 支持数据全量导出。
+5. 支持 update 更新多个字段。
 
 ## 不适合
 1. 需要计算得分的场景。
@@ -40,7 +41,8 @@ WhereBuilder test = new WhereBuilder()
 - not 子句必须不能命中
 这三层逻辑关系可以任意组合，支持多层嵌套。<html><font color=red>``or(xx)`` 指的是括号里面的逻辑关系是 or 。</font></html> 所以如果查询条件是 A 或 B 时，写作 ``or(new WhereBuilder().eq("A").eq("B"))``
 
-子句支持查询条件如下：
+Where 子句支持查询条件如下：
+
 - range：范围查询
 - eq：等于
 - in: 多值查询
@@ -48,6 +50,17 @@ WhereBuilder test = new WhereBuilder()
 - regex: 正则查询
 - nest：查询嵌套对象的内容
 - word-spacing: 词间距查询
+
+GroupBuilder 子句支持分组条件如下：
+
+- addField：按某个 field 字段统计数量
+- addFilter：添加过滤条件
+- sub：开启子查询
+- nest: nested 类型中的数据统计
+- distinct：数据去重
+- avg：平均值
+- max：最大值
+- min：最小值
 
 ## GroupBuilder
 
